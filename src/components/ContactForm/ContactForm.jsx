@@ -9,13 +9,14 @@ import {
 import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { addContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/operations';
+import { getContacts } from 'redux/selectors';
 
 const ContactForm = () => {
   const nameID = nanoid();
   const numberID = nanoid();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -40,18 +41,18 @@ const ContactForm = () => {
       .required(),
   });
 
-  const handlerFormSubmit = (values, actions) => {
-    const nameNormalized = values.name.toLowerCase();
+  const handlerFormSubmit = ({ name, number }, actions) => {
+    const nameNormalized = name.toLowerCase();
 
     const isNameAlreadyInContacts = contacts.find(
       contact => contact.name.toLowerCase() === nameNormalized
     );
 
     if (isNameAlreadyInContacts) {
-      alert(`${values.name} is already in contacts.`);
+      alert(`${name} is already in contacts.`);
       return;
     }
-    dispatch(addContact(values.name, values.number));
+    dispatch(addContact({name, number}));
     actions.resetForm();
   };
   return (

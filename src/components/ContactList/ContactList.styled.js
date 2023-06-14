@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 export const ContactsList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-self: center;
+  gap: 25px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -12,8 +13,7 @@ export const ContactsList = styled.ul`
 export const ConctactListItem = styled.li`
   display: flex;
   gap: 10px;
-  align-items: center;
-  justify-content: center;
+  justify-content: right;
 
   font-size: 20px;
 `;

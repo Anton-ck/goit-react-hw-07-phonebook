@@ -4,22 +4,25 @@ import {
   ConctactListItem,
   DeleteButton,
 } from './ContactList.styled';
-import { deleteContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/operations';
+
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts);
-  const filtered = useSelector(state => state.filter);
+  const contacts = useSelector(getContacts);
+  const filtered = useSelector(getFilter);
   const dispatch = useDispatch();
 
-const filteredContacts = (() => {
-  const normalizedFilter = filtered.toLowerCase();
-  return contacts.filter(({ name }) =>
-    name.toLowerCase().includes(normalizedFilter)
-  );
-})();
-  
-  
+  const filteredContacts = (() => {
+    const normalizedFilter = filtered.toLowerCase();
+    return contacts.filter(({ name }) =>
+      name.toLowerCase().includes(normalizedFilter)
+    );
+  })();
+
+
+
   return (
     <>
       <ContactsList>
